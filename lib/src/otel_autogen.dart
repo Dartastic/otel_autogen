@@ -1,13 +1,13 @@
-// Licensed under the Dartastic Pro Software License Agreement.
+// Licensed under the Apache License, Version 2.0
 // Copyright 2025-2026 Mindful Software LLC d/b/a Dartastic.io, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 
 import 'otel_autogen_suppression.dart';
 
 const _tracerName = 'dartastic_otel_libs_autogen';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AutoGenResult {
   const AutoGenResult({
@@ -112,7 +112,7 @@ Future<T> tracedAutoGen<T>({
   final span = _tracer().startSpan(
     'autogen $operation',
     kind: SpanKind.client,
-    attributes: OTel.attributesFromMap(m),
+    attributes: OTelAPI.attributesFromMap(m),
   );
   try {
     final r = await invoke();
@@ -120,115 +120,115 @@ Future<T> tracedAutoGen<T>({
       final res = r.result!;
       final extras = <Attribute<Object>>[];
       if (res.runtime != null) {
-        extras.add(OTel.attributeString('autogen.runtime', res.runtime!));
+        extras.add(OTelAPI.attributeString('autogen.runtime', res.runtime!));
       }
       if (res.teamKind != null) {
-        extras.add(OTel.attributeString('autogen.team.kind', res.teamKind!));
+        extras.add(OTelAPI.attributeString('autogen.team.kind', res.teamKind!));
       }
       if (res.teamName != null) {
-        extras.add(OTel.attributeString('autogen.team.name', res.teamName!));
+        extras.add(OTelAPI.attributeString('autogen.team.name', res.teamName!));
       }
       if (res.agentName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.agent.name',
           res.agentName!,
         ));
       }
       if (res.agentRole != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.agent.role',
           res.agentRole!,
         ));
       }
       if (res.modelProvider != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.model.provider',
           res.modelProvider!,
         ));
       }
       if (res.modelName != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.model.name',
           res.modelName!,
         ));
       }
       if (res.taskId != null) {
-        extras.add(OTel.attributeString('autogen.task.id', res.taskId!));
+        extras.add(OTelAPI.attributeString('autogen.task.id', res.taskId!));
       }
       if (res.turn != null) {
-        extras.add(OTel.attributeInt('autogen.turn', res.turn!));
+        extras.add(OTelAPI.attributeInt('autogen.turn', res.turn!));
       }
       if (res.maxTurns != null) {
-        extras.add(OTel.attributeInt('autogen.max_turns', res.maxTurns!));
+        extras.add(OTelAPI.attributeInt('autogen.max_turns', res.maxTurns!));
       }
       if (res.terminationReason != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.termination.reason',
           res.terminationReason!,
         ));
       }
       if (res.toolName != null) {
-        extras.add(OTel.attributeString('autogen.tool.name', res.toolName!));
+        extras.add(OTelAPI.attributeString('autogen.tool.name', res.toolName!));
       }
       if (res.toolCallCount != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'autogen.tool.call_count',
           res.toolCallCount!,
         ));
       }
       if (res.promptTokens != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'autogen.usage.prompt_tokens',
           res.promptTokens!,
         ));
       }
       if (res.completionTokens != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'autogen.usage.completion_tokens',
           res.completionTokens!,
         ));
       }
       if (res.totalTokens != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'autogen.usage.total_tokens',
           res.totalTokens!,
         ));
       }
       if (res.estCostMicros != null) {
-        extras.add(OTel.attributeInt(
+        extras.add(OTelAPI.attributeInt(
           'autogen.usage.est_cost_micros',
           res.estCostMicros!,
         ));
       }
       if (res.streamed != null) {
-        extras.add(OTel.attributeBool('autogen.streamed', res.streamed!));
+        extras.add(OTelAPI.attributeBool('autogen.streamed', res.streamed!));
       }
       if (res.humanInputRequired != null) {
-        extras.add(OTel.attributeBool(
+        extras.add(OTelAPI.attributeBool(
           'autogen.human_input.required',
           res.humanInputRequired!,
         ));
       }
       if (res.errorKind != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.error.kind',
           res.errorKind!,
         ));
         span.setStatus(SpanStatusCode.Error, 'AutoGen ${res.errorKind}');
       }
       if (res.errorMessage != null) {
-        extras.add(OTel.attributeString(
+        extras.add(OTelAPI.attributeString(
           'autogen.error.message',
           res.errorMessage!,
         ));
       }
-      if (extras.isNotEmpty) span.addAttributes(OTel.attributes(extras));
+      if (extras.isNotEmpty) span.addAttributes(OTelAPI.attributes(extras));
     }
     return r.value;
   } catch (e, st) {
-    span.addAttributes(OTel.attributes([
-      OTel.attributeString(
-        ErrorResource.errorType.key,
+    span.addAttributes(OTelAPI.attributes([
+      OTelAPI.attributeString(
+        ErrorAttributes.errorType.key,
         e.runtimeType.toString(),
       ),
     ]));
