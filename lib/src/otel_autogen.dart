@@ -10,6 +10,7 @@ const _tracerName = 'dartastic_otel_libs_autogen';
 APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 class AutoGenResult {
+  /// Creates a result.
   const AutoGenResult({
     this.runtime,
     this.teamKind,
@@ -83,8 +84,13 @@ class AutoGenResult {
   final String? errorMessage;
 }
 
+/// What a traced call returned: the value for the caller plus fields
+/// recorded on the span.
 class AutoGenCallResult<T> {
+  /// Creates a call result.
   const AutoGenCallResult({required this.value, this.result});
+
+  /// The value returned to the caller.
   final T value;
   final AutoGenResult? result;
 }

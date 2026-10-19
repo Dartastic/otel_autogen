@@ -2,7 +2,7 @@ name: otel_autogen
 description: >-
   OpenTelemetry instrumentation for autogen by Dartastic.io. Adds standard
   OpenTelemetry observability to applications that use autogen.
-version: 0.1.0-wip
+version: 0.1.0
 repository: https://github.com/dartastic/otel_autogen
 homepage: https://dartastic.io
 
